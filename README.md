@@ -3,68 +3,76 @@
 ## Medallion Architecture
 <img width="1105" alt="med_arch" src="https://github.com/user-attachments/assets/deb1711c-eb98-4796-930d-fe25711ff619" />
 
+## Project Overview
 
-## Overview
-This project is designed to process and analyze stock-related data generated every second from multiple sources, including user transactions, market information, and stock exchange data. The data is artificially generated to mimic real-world scenarios, ensuring that stock prices fluctuate within a reasonable range over time. The project is structured in a medallion archictecture into three main layers: Bronze, Silver, and Gold, each representing a different stage of data processing and refinement.
+**StockMedallionPipeline** is a data engineering project demonstrating the implementation of **Medallion Architecture** for stock market data. The architecture organizes data into three layers — Bronze, Silver, and Gold — to efficiently capture, clean, transform, and analyze stock data.
 
-## Key Features
-- **Data Ingestion**: Import data from MySQL and MongoDB databases using environment variables for secure connections.
+This project processes stock data from multiple sources, including user transactions, market price updates, and stock exchange records, simulating a real-world financial data processing pipeline.
 
-- **Data Processing**: Clean, enrich, and structure raw data into meaningful formats.
+> ⚠️ **Note:** All data used in this project is artificially generated and does not represent real financial data. However, the data is designed to mimic realistic stock price fluctuations, transactions, and market behavior.
 
-- **Data Aggregation**: Aggregate data into hourly, daily, monthly, and quarterly summaries for comprehensive analysis.
+---
 
-- **Output Generation**: Generate CSV files containing aggregated data for further analysis and reporting.
+## Medallion Architecture
 
-- **CI/CD Testing**: Implement continuous integration and deployment (CI/CD) testing to ensure code quality and reliability.
-
-## Data Layers
 ### Bronze Layer
-
-The Bronze Layer captures raw data from various sources, including:
-
-- User transactions
-
-- Market information
-
-- Stock and company registration details from stock exchanges
-
-This layer stores the data in its most raw form, without any transformations or cleaning.
+- Raw ingestion layer
+- Captures:
+    - User transactions (from MongoDB)
+    - Market and stock registration data (from MySQL)
+- Data in its rawest form for traceability.
 
 ### Silver Layer
-
-The Silver Layer processes the raw data from the Bronze Layer by:
-
-- Cleaning and structuring the data
-
-- Enriching it with additional details
-
-- Aggregating it at a granular level for further processing
-
-This layer ensures that the data is ready for more advanced analysis and reporting.
+- Cleansed and enriched layer
+- Structured, validated, and linked data
+- Combines transaction data with stock and market data
 
 ### Gold Layer
+- Aggregated layer for analytics and reporting
+- Data summarized at:
+    - **Hourly**
+    - **Daily**
+    - **Monthly**
+    - **Quarterly**
 
-The Gold Layer further aggregates the data into daily, monthly, and yearly summaries, optimizing it for:
+---
 
-- Reporting
+## Key Features
 
-- Dashboards
+- **Data Integration**
+    - Load structured stock and market data into MySQL.
+    - Load unstructured transactions data into MongoDB.
+    - Extract data from MySQL and MongoDB into Spark for processing.
+- **Medallion Processing Pipeline**
+    - Transform Bronze data to Silver via validation, cleansing, and enrichment.
+    - Aggregate Silver data to Gold at different time granularities (hourly, daily, monthly, quarterly).
+- **Analytics Ready**
+    - The Gold Layer data is structured for BI tools, dashboards, and further analytical exploration.
+- **Pyspark-based Aggregation**
+    - All data transformation and aggregation logic uses **PySpark** only.
+    - No `pandas` or other Python data processing libraries are allowed.
 
-- Business intelligence applications
+---
 
-This layer provides a high-level overview of the data, making it easier to derive insights and make informed decisions.
+## Tech Stack
 
-## Data Aggregation
-The project aggregates stock-related data into four main timeframes:
+- **Python 3.8+**
+- **MySQL**
+- **MongoDB**
+- **Apache Spark (PySpark)**
 
-1. Hourly
+---
 
-2. Daily
+## Dataset Description
 
-3. Monthly
+- **Stock Market Data (`stock_market.sql`)**
+    - Contains stock listings, market data, and price history.
+    - Stored in MySQL.
+- **User Transactions Data (`transactions.json`)**
+    - Contains user buy/sell transactions with timestamps.
+    - Stored in MongoDB.
 
-4. Quarterly
+---
 
 
 ## CI/CD Testing
